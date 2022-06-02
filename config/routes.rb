@@ -1,3 +1,15 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'comments/index'
+  get 'comments/show'
+  get 'comments/edit'
+  get 'comments/destroy'
+  get 'product/index'
+  get 'product/show'
+  get 'product/destroy'
+  get 'product/edit'
+  root to: "home#index"
+  
+  devise_for :users
+
 end
