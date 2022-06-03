@@ -4,7 +4,8 @@ class CreateComments < ActiveRecord::Migration[5.2]
 
       t.belongs_to :product
       t.belongs_to :user
-      t.text :comment
+      
+      t.text :comment, null: false
       t.timestamps
 
     end

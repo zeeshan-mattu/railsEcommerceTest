@@ -1,0 +1,16 @@
+<%= form_with model: @product do |form| %>
+  <%= form.label :user_id %>
+  <%= form.text_field :user_id %><br/>
+  <%= form.label :name %>
+  <%= form.text_field :name %><br/>
+  <%= form.label :size %>
+  <%= form.text_field :size %><br/>
+  <%= form.label :quantity %>
+  <%= form.text_field :quantity %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
