@@ -19,8 +19,6 @@
 
 
 //= require popper
-//= require ./plugins/custom.js
-//= require ./plugins/custom2.js
 //= require ./plugins/gmaps.min.js
 //= require ./plugins/main.js
 
