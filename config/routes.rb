@@ -1,3 +1,15 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'cards/show'
+  root to: "shops#index"
+
+
+  resources :items
+  resources :shops, only:[:index, :show]
+  resources :order_items
+  resource  :cards, only:[:show]
+  # resources :products
+  # resources :comments
+
+  devise_for :users
+
 end
