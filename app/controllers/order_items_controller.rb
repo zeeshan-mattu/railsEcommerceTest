@@ -10,8 +10,9 @@ class OrderItemsController < ApplicationController
   def update
     @order = current_order
     @order_item = @order.order_items.find(params[:id])
-    @order_item.update_attributes(order_params)
+    @order_item.update(order_params)
     @order_items = current_order.order_items
+    byebug
   end
 
   def destroy
@@ -23,6 +24,7 @@ class OrderItemsController < ApplicationController
 
   private
   def order_params
+    byebug
     params.require(:order_item).permit(:item_id, :quantity)
   end
 

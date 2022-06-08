@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-  </section>
+</section>
 
 
   <section class="cart_area">
@@ -31,7 +31,7 @@
             <tbody>
 
 
-              <% @order_items.each do |item| %>
+              <% @order_items.each do |i| %>
                 <tr>
                   <td>
                     <div class="media">
@@ -39,29 +39,37 @@
                         <%= image_tag "plugins/img/cart.jpg" %>
                       </div>
                       <div class="media-body">
-                        <p><%= item.item.title %></p>
+                        <p><%= i.item.title %></p>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <h5><%= item.item.price %></h5>
+                    <h5><%= i.item.price %></h5>
                   </td>
-                  <td>
+                  <td class="d-none">
+                    <%= link_to "update values!", order_item_path(i), params: {id: i.id, item_id: i.item_id, quantity: i.quantity.to_i+1 }, method: :patch, remote: true %>
                     <div class="product_count">
-
-                      <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                      <input type="text" name="qty" id="sst" maxlength="12" value="<%= i.quantity %>" title="Quantity:"
                         class="input-text qty">
+
                       <button
                         onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                         class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
                       <button
                         onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                         class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-
                     </div>
                   </td>
                   <td>
-                    <h5><%= current_order.subtotal %></h5>
+                    <%= form_for i, remote: true do |f| %>
+                      <%= f.hidden_field :item_id, :value=>i.item.id %>
+                      <%= f.number_field :quantity, :value=> i.quantity.to_i, class: "input-text qty" %>
+                      <%= f.submit "Update Card", class: "gray_btn"%>
+                      <%= link_to "Remove item", order_item_path(i),class: "gray_btn", method: :delete, remote: true %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <h5><%= i.total %></h5>
                   </td>
                 </tr>
               <% end %>
@@ -90,7 +98,7 @@
                   <h5>Subtotal</h5>
                 </td>
                 <td>
-                  <h5>$2160.00</h5>
+                  <h5><%= current_order.subtotal %></h5>
                 </td>
               </tr>
               <tr class="shipping_area">
@@ -134,7 +142,7 @@
                 </td>
                 <td>
                   <div class="checkout_btn_inner d-flex align-items-center">
-                    <a class="gray_btn" href="#">Continue Shopping</a>
+                    <%= link_to "Continue Shopping", root_path, class: "gray_btn" %>
                     <a class="primary-btn" href="#">Proceed to checkout</a>
                   </div>
                 </td>
@@ -148,25 +156,17 @@
 
   <%= render "layouts/footer"%>
 
+<% @order_items.each do |i| %>
+  <h3> <%= i.item.title %> </h3>
+  <h5> <%= i.item.price %> </h5>
 
-
-
-
-
-
-<% @order_items.each do |item| %>
-  <h3> <%= item.item.title %> </h3>
-  <h5> <%= item.item.price %> </h5>
-
-
-  <%= form_for item, remote: true do |f| %>
-    <%= f.hidden_field :item_id, :value=>item.item.id %>
-    <%= f.number_field :quantity, :value=> item.quantity.to_i %>
+  <%= form_for i, remote: true do |f| %>
+    <%= f.hidden_field :item_id, :value=>i.item.id %>
+    <%= f.number_field :quantity, :value=> i.quantity.to_i %>
     <%= f.submit "Update Card"%>
-
-    <%= link_to "Remove item", order_item_path(item), method: :delete, remote: true %>
+    <%= link_to "Remove item", order_item_path(i), method: :delete, remote: true %>
   <% end %>
-  <h2>Subtotal: <%= item.total%>
+  <h2>Subtotal: <%= i.total%>
 <% end %>
 
 

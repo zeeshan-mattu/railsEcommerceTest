@@ -5,6 +5,5 @@ module ApplicationHelper
     else
       Order.new
     end
-
   end
 end

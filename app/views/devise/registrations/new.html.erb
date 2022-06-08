@@ -35,6 +35,17 @@
             <h3>Sign up to enter</h3>
 
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => 'row login_form'}) do |f| %>
+
+              <div class="form-group">
+                <%= f.label :avatar %>
+                <%= f.file_field :avatar %>
+                <% if resource.avatar.attached? %>
+                  <%= image_tag resource.avatar  %>
+                <% else %>
+                  <%= image_tag 'default_profile.jpg', :width=>100 %>
+                <% end %>
+              </div>
+
               <div class="col-md-12 form-group">
                 <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email" %>
               </div>

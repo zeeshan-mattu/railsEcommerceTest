@@ -34,13 +34,13 @@ ActiveRecord::Schema.define(version: 2022_06_03_132734) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "product_id"
+    t.integer "item_id"
     t.integer "user_id"
-    t.text "comment", null: false
+    t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title", default: "", null: false
-    t.index ["product_id"], name: "index_comments_on_product_id"
+    t.string "name", default: "", null: false
+    t.index ["item_id"], name: "index_comments_on_item_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
