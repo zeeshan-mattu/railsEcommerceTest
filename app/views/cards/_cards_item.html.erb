@@ -1,4 +1,3 @@
-<%= render "layouts/header"%>
 
 <section class="banner-area organic-breadcrumb">
     <div class="container">
@@ -13,162 +12,141 @@
       </div>
     </div>
 </section>
-
-
-  <section class="cart_area">
-    <div class="container">
-      <div class="cart_inner">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
+<section class="cart_area">
+  <div class="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @order_items.each do |i| %>
               <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-
-
-              <% @order_items.each do |i| %>
-                <tr>
-                  <td>
-                    <div class="media">
-                      <div class="d-flex">
-                        <%= image_tag "plugins/img/cart.jpg" %>
-                      </div>
-                      <div class="media-body">
-                        <p><%= i.item.title %></p>
-                      </div>
+                <td>
+                  <div class="media">
+                    <div class="d-flex">
+                      <%= image_tag "plugins/img/cart.jpg" %>
                     </div>
-                  </td>
-                  <td>
-                    <h5><%= i.item.price %></h5>
-                  </td>
-                  <td class="d-none">
-                    <%= link_to "update values!", order_item_path(i), params: {id: i.id, item_id: i.item_id, quantity: i.quantity.to_i+1 }, method: :patch, remote: true %>
-                    <div class="product_count">
-                      <input type="text" name="qty" id="sst" maxlength="12" value="<%= i.quantity %>" title="Quantity:"
-                        class="input-text qty">
-
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                        class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                      <button
-                        onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                        class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                    <div class="media-body">
+                      <p><%= i.item.title %></p>
                     </div>
-                  </td>
-                  <td>
-                    <%= form_for i, remote: true do |f| %>
-                      <%= f.hidden_field :item_id, :value=>i.item.id %>
-                      <%= f.number_field :quantity, :value=> i.quantity.to_i, class: "input-text qty" %>
-                      <%= f.submit "Update Card", class: "gray_btn"%>
-                      <%= link_to "Remove item", order_item_path(i),class: "gray_btn", method: :delete, remote: true %>
+                  </div>
+                </td>
+                <td>
+                  <h5><%= i.item.price %></h5>
+                </td>
+                <td class="d-none">
+                  <%= link_to "update values!", order_item_path(i), params: {id: i.id, item_id: i.item_id, quantity: i.quantity.to_i+1 }, method: :patch, remote: true %>
+                  <div class="product_count">
+                    <input type="text" name="qty" id="sst" maxlength="12" value="<%= i.quantity %>" title="Quantity:"
+                      class="input-text qty">
+                    <button
+                      onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                      class="increase items-count d-none" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                    <button
+                      onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                      class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                  </div>
+                </td>
+                <td>
+                <%= button_to remote: true do%><i class="lnr lnr-chevron-up"></i><%end%>
+                  <%= form_for i, remote: true do |f| %>
+                    <%= f.hidden_field :item_id, :value=>i.item.id %>
+                    <%= f.number_field :quantity, :value=> i.quantity.to_i, class: "input-text qty" %>
+                    <%= f.submit class: "gray_btn" do%>
+                      <i class="lnr lnr-chevron-up">
                     <% end %>
-                  </td>
-                  <td>
-                    <h5><%= i.total %></h5>
-                  </td>
-                </tr>
-              <% end %>
-              <tr class="bottom_button">
-                <td>
-                  <a class="gray_btn" href="#">Update Cart</a>
+                    <%= link_to "Remove item", order_item_path(i),class: "gray_btn", method: :delete, remote: true %>
+                  <% end %>
                 </td>
                 <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                  <div class="cupon_text d-flex align-items-center">
-                    <input type="text" placeholder="Coupon Code">
-                    <a class="primary-btn" href="#">Apply</a>
-                    <a class="gray_btn" href="#">Close Coupon</a>
-                  </div>
+                  <h5><%= i.total %></h5>
                 </td>
               </tr>
-              <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                  <h5>Subtotal</h5>
-                </td>
-                <td>
-                  <h5><%= current_order.subtotal %></h5>
-                </td>
-              </tr>
-              <tr class="shipping_area">
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                  <h5>Shipping</h5>
-                </td>
-                <td>
-                  <div class="shipping_box">
-                    <ul class="list">
-                      <li><a href="#">Flat Rate: $5.00</a></li>
-                      <li><a href="#">Free Shipping</a></li>
-                      <li><a href="#">Flat Rate: $10.00</a></li>
-                      <li class="active"><a href="#">Local Delivery: $2.00</a></li>
-                    </ul>
-                    <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
-                    <select class="shipping_select">
-                      <option value="1">Bangladesh</option>
-                      <option value="2">India</option>
-                      <option value="4">Pakistan</option>
-                    </select>
-                    <select class="shipping_select">
-                      <option value="1">Select a State</option>
-                      <option value="2">Select a State</option>
-                      <option value="4">Select a State</option>
-                    </select>
-                    <input type="text" placeholder="Postcode/Zipcode">
-                    <a class="gray_btn" href="#">Update Details</a>
-                  </div>
-                </td>
-              </tr>
-              <tr class="out_button_area">
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                  <div class="checkout_btn_inner d-flex align-items-center">
-                    <%= link_to "Continue Shopping", root_path, class: "gray_btn" %>
-                    <a class="primary-btn" href="#">Proceed to checkout</a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            <% end %>
+            <tr class="bottom_button">
+              <td>
+                <a class="gray_btn" href="#">Update Cart</a>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+                <div class="cupon_text d-flex align-items-center">
+                  <input type="text" placeholder="Coupon Code">
+                  <a class="primary-btn" href="#">Apply</a>
+                  <a class="gray_btn" href="#">Close Coupon</a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+                <h5>Subtotal</h5>
+              </td>
+              <td>
+                <h5><%= current_order.subtotal %></h5>
+              </td>
+            </tr>
+            <tr class="shipping_area">
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+                <h5>Shipping</h5>
+              </td>
+              <td>
+                <div class="shipping_box">
+                  <ul class="list">
+                    <li><a href="#">Flat Rate: $5.00</a></li>
+                    <li><a href="#">Free Shipping</a></li>
+                    <li><a href="#">Flat Rate: $10.00</a></li>
+                    <li class="active"><a href="#">Local Delivery: $2.00</a></li>
+                  </ul>
+                  <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
+                  <select class="shipping_select">
+                    <option value="1">Bangladesh</option>
+                    <option value="2">India</option>
+                    <option value="4">Pakistan</option>
+                  </select>
+                  <select class="shipping_select">
+                    <option value="1">Select a State</option>
+                    <option value="2">Select a State</option>
+                    <option value="4">Select a State</option>
+                  </select>
+                  <input type="text" placeholder="Postcode/Zipcode">
+                  <a class="gray_btn" href="#">Update Details</a>
+                </div>
+              </td>
+            </tr>
+            <tr class="out_button_area">
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+                <div class="checkout_btn_inner d-flex align-items-center">
+                  <%= link_to "Continue Shopping", root_path, class: "gray_btn" %>
+                  <%= link_to "Proceed to checkout!", checkouts_create_path, method: :post, remote: true, class: "primary-btn" %>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </section>
-
-  <%= render "layouts/footer"%>
-
-<% @order_items.each do |i| %>
-  <h3> <%= i.item.title %> </h3>
-  <h5> <%= i.item.price %> </h5>
-
-  <%= form_for i, remote: true do |f| %>
-    <%= f.hidden_field :item_id, :value=>i.item.id %>
-    <%= f.number_field :quantity, :value=> i.quantity.to_i %>
-    <%= f.submit "Update Card"%>
-    <%= link_to "Remove item", order_item_path(i), method: :delete, remote: true %>
-  <% end %>
-  <h2>Subtotal: <%= i.total%>
-<% end %>
-
-
-
-<h3>Your current card value a subtotal of: <%= current_order.subtotal %></h3>
+  </div>
+</section>

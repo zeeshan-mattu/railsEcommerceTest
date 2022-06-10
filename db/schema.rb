@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_03_132734) do
+ActiveRecord::Schema.define(version: 2022_06_09_143729) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -45,10 +45,12 @@ ActiveRecord::Schema.define(version: 2022_06_03_132734) do
   end
 
   create_table "items", force: :cascade do |t|
+    t.integer "user_id"
     t.string "title"
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -62,10 +64,12 @@ ActiveRecord::Schema.define(version: 2022_06_03_132734) do
   end
 
   create_table "orders", force: :cascade do |t|
+    t.integer "user_id"
     t.decimal "subtotal"
     t.decimal "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -88,7 +92,13 @@ ActiveRecord::Schema.define(version: 2022_06_03_132734) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "address"
+    t.integer "item_id"
+    t.integer "order_id"
+    t.integer "comment_id"
+    t.index ["comment_id"], name: "index_users_on_comment_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["item_id"], name: "index_users_on_item_id"
+    t.index ["order_id"], name: "index_users_on_order_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

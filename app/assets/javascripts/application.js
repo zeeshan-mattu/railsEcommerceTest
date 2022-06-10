@@ -17,12 +17,6 @@
 //= require jquery_ujs
 
 
-
-//= require popper
-//= require ./plugins/gmaps.min.js
-//= require ./plugins/main.js
-
-
 //= require_tree .
 //= require bootstrap-sprockets
 

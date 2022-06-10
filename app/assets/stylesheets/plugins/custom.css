@@ -2066,7 +2066,8 @@ h6 {
 
 .single-product .product-details h6 {
   font-size: 16px;
-  text-transform: uppercase
+  text-transform: uppercase;
+  color: #222;
 }
 
 .single-product .product-details .price h6 {
@@ -2168,7 +2169,9 @@ h6 {
 
 .exclusive-deal-area .exclusive-left {
   position: realtive;
-  background: url(./../../images/plugins/img/exclusiveBg.jpg) center no-repeat;
+  background-image: url('assets/exclusiveBg.jpg');
+  background-position:  center;
+  background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
   padding: 275px 0
@@ -5414,4 +5417,11 @@ a{
 .footer-text a,
 .footer-text i {
   color: #ffba00
+}
+
+
+.comment-avatar{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
 }

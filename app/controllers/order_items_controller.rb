@@ -3,7 +3,7 @@ class OrderItemsController < ApplicationController
   def create
     @order = current_order
     @order_item = @order.order_items.new(order_params)
-    @order.save
+    @order.save!
     session[:order_id] = @order.id
   end
 
@@ -12,7 +12,6 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.find(params[:id])
     @order_item.update(order_params)
     @order_items = current_order.order_items
-    byebug
   end
 
   def destroy
@@ -24,7 +23,6 @@ class OrderItemsController < ApplicationController
 
   private
   def order_params
-    byebug
     params.require(:order_item).permit(:item_id, :quantity)
   end
 

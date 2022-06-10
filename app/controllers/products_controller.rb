@@ -26,7 +26,6 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    # authorize @product
   end
 
   def update
@@ -41,8 +40,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-
-    # authorize @product
     if @product.delete
       flash[:notice] = "Product Deleted!"
       redirect_to products_path

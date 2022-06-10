@@ -1,14 +1,11 @@
-class CommentPolicy < ApplicationPolicy
+class UserPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
     #   scope.all
     # end
-    def edit?
-      user?
-    end
-    def destroy?
-    end
-
+  end
+  def index?
+    @user.present?
   end
 end

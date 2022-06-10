@@ -68,5 +68,5 @@ gem 'devise'
 gem 'bootstrap', '5.1.3'
 gem 'jquery-rails'
 
-gem "pundit", "~> 2.2"
+gem "pundit"
 gem 'stripe'

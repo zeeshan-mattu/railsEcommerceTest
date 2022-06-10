@@ -1,5 +1,4 @@
 
-<%= render "layouts/header"%>
 <section class="banner-area organic-breadcrumb">
   <div class="container">
     <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
@@ -48,8 +47,8 @@
               <%= form_for @order_item, remote: true do |f| %>
                 <label for="qty">Quantity:</label>
                 <%= f.hidden_field :item_id, :value => @item.id %>
-                <%= f.number_field :quantity, :value => @order_item.quantity.to_i, :min => 1, class: "input-text qty" %>
-                <%= f.button "Add to cart", class: "primary-btn" %>
+                <%= f.number_field :quantity, :value => 1, :min => 1, class: "input-text qty" %>
+                <%= f.button "Add to bag", class: "primary-btn" %>
               <% end %>
             </div>
           </div>
@@ -74,11 +73,11 @@
           aria-selected="false">Specification</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+        <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
           aria-selected="false">Comments</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+        <a class="nav-link " id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
           aria-selected="false">Reviews</a>
       </li>
     </ul>
@@ -181,64 +180,36 @@
           </table>
         </div>
       </div>
-      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <div class="row">
           <div class="col-lg-6">
-            <div class="comment_list">
-
-
-              <% @item.comments.each do |comment| %>
-                <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/product/review-1.png" alt="">
-                  </div>
-                  <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <h5>12th Feb, 2018 at 05:56 pm</h5>
-                    <a class="reply_btn" href="#">Reply</a>
-                  </div>
-                </div>
-                <p><%= comment.description %></p>
-              </div>
-              <% end %>
+            <div id="comments" class="comment_list">
+              <%= render "comment" %>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="review_box">
               <h4>Post a comment</h4>
-              <form class="row contact_form" action="https://preview.colorlib.com/theme/karma/contact_process.php"
-                method="post" id="contactForm" novalidate>
+              <%= form_for @comment, url: item_comments_path(@item), remote: true do |form| %>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name">
+                     <%= form.text_field :name, class: "form-control", placeholder: "Your Full name" %>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <textarea class="form-control" name="message" id="message" rows="1"
-                      placeholder="Message"></textarea>
+                  <%= form.text_area :description, class: "form-control", placeholder: "Message" %>
                   </div>
                 </div>
                 <div class="col-md-12 text-right">
-                  <button type="submit" value="submit" class="btn primary-btn">Submit Now</button>
+                  <%= form.button "Add Comment",  class:"btn primary-btn"%>
                 </div>
-              </form>
+              <% end %>
             </div>
           </div>
         </div>
       </div>
-      <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+      <div class="tab-pane fade " id="review" role="tabpanel" aria-labelledby="review-tab">
         <div class="row">
           <div class="col-lg-6">
             <div class="row total_rate">
@@ -379,4 +350,3 @@
     </div>
   </div>
 </section>
-<%= render "layouts/footer"%>

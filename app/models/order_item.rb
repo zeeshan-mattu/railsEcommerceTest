@@ -1,10 +1,10 @@
 class OrderItem < ApplicationRecord
+
   belongs_to :order
   belongs_to :item
 
   before_save :set_unit_price
   before_save :set_total
-
 
   def unit_price
     if persisted?
