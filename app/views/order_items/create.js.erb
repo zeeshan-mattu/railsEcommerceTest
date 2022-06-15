@@ -1,1 +1,3 @@
-$("#card").html("<%= escape_javascript(render("cards/card"))%>")
+$("#card").html("<%= escape_javascript(render("cards/card"))%>");
+$("#notification-count").html("<%= escape_javascript(render("cards/items_count"))%>");
+$("#alerts").html("<%= escape_javascript(render("layouts/alerts")) %>")

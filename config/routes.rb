@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+  get 'errors/internal_server_error'
   devise_for :users
   root to: "shops#index"
-  resources :items do
+  resources :items, shallow: true do
     resources :comments, only: %i[create edit update destroy]
   end
 
@@ -10,6 +12,8 @@ Rails.application.routes.draw do
   resources :order_items
   resource  :cards, only:[:show]
 
+  delete "clearCart", to: "order_items#clearCart"
   post "checkouts/create", to: "checkouts#create"
-
+  get "/search", to: "shops#search"
+  
 end

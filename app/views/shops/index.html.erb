@@ -177,51 +177,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
-
-        <% @items.each do |item| %>
-          <div class="col-lg-3 col-md-6">
-            <div class="single-product">
-              <%= link_to shop_path(item) do %>
-                <%= image_tag "plugins/img/product/p4.jpg", class: "img-fluid", alt:"" %>
-                <div class="product-details">
-                  <h6><%= item.title %></h6>
-                  <div class="price">
-                    <h6><%= number_to_currency(item.price*100/100) %></h6>
-                    <h6 class="l-through"><%= number_to_currency( (item.price*100/100)+ 120 ) %></h6>
-                  </div>
-                  <div class="prd-bottom">
-                    <% if current_user && current_user.id === item.user_id %>
-                        <div class= "social-info">
-                          <span class="ti-bag"></span>
-                          <p class="hover-text">Its your product</p>
-                        </div>
-                      <% else %>
-                      <%= link_to order_items_path(item, {:order_item => {item_id: item.id, quantity: 1}}), method: :post, class: "social-info", remote: true do %>
-                        <span class="ti-bag"></span>
-                        <p class="hover-text">add to bag</p>
-                      <% end %>
-                    <% end %>
-                    <a href="#" class="social-info">
-                      <span class="lnr lnr-heart"></span>
-                      <p class="hover-text">Wishlist</p>
-                    </a>
-                    <a href="#" class="social-info">
-                      <span class="lnr lnr-sync"></span>
-                      <p class="hover-text">compare</p>
-                    </a>
-                    <a href="#" class="social-info">
-                      <span class="lnr lnr-move"></span>
-                      <p class="hover-text">view more</p>
-                    </a>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          <% end %>
-
-        </div>
+        <%= render "item" %>
       </div>
     </div>
   </section>

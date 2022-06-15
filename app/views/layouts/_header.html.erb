@@ -72,8 +72,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="nav-item">
-                <%= link_to cards_path do %>
-                  <span class="ti-bag"></span>
+                <%= link_to cards_path, class: "nav-link cart-notification" do %>
+                  <div class="noification-count" id="notification-count">
+                    <%= render "cards/items_count" %>
+                  </div>
+                  <span class="ti-bag"></span> Cart
                 <% end %>
               </li>
               <li class="nav-item">
@@ -86,8 +89,8 @@
     </div>
     <div class="search_input" id="search_input_box">
       <div class="container">
-        <form class="d-flex justify-content-between">
-          <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+        <form class="d-flex justify-content-between" method="GET" action="/search">
+          <input type="text" class="form-control" id="search_input" name="query"  placeholder="Search Here">
           <button type="submit" class="btn"></button>
           <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
         </form>

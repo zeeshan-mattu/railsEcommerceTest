@@ -2,9 +2,11 @@ class OrderItem < ApplicationRecord
 
   belongs_to :order
   belongs_to :item
-
   before_save :set_unit_price
   before_save :set_total
+
+
+  validates :quantity, numericality: { greater_than_or_equal_to: 1 }
 
   def unit_price
     if persisted?
@@ -23,6 +25,7 @@ class OrderItem < ApplicationRecord
   def set_unit_price
     self[:unit_price] = unit_price
   end
+
   def set_total
     self[:total] = total*quantity
   end

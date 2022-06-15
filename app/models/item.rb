@@ -3,6 +3,9 @@ class Item < ApplicationRecord
   has_many :order_items
   has_many :comments
 
+  has_many_attached :images
+  validate :image_type
+
   def to_builder
     Jbuilder.new do |item|
       item.name title
@@ -12,4 +15,16 @@ class Item < ApplicationRecord
     end
   end
 
+
+  private
+  def image_type
+    if images.attached? == false
+      errors.add(:images, "are missing")
+    end
+    images.each do |image|
+      unless image.content_type.in?(%('image/jpg image/png image/jpeg'))
+        errors.add(:images, "need to be JPG, PNG, JPEG")
+      end
+    end
+  end
 end

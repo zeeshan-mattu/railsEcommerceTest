@@ -18,15 +18,11 @@
     <div class="row s_product_inner">
       <div class="col-lg-6">
         <div class="s_Product_carousel">
-          <div class="single-prd-item">
-            <%= image_tag "plugins/img/category/s-p1.jpg", class: "img-fluid", alt:"" %>
-          </div>
-          <div class="single-prd-item">
-            <%= image_tag "plugins/img/category/s-p1.jpg", class: "img-fluid", alt:"" %>
-          </div>
-          <div class="single-prd-item">
-            <%= image_tag "plugins/img/category/s-p1.jpg", class: "img-fluid", alt:"" %>
-          </div>
+            <% @item.images.each do |image| %>
+              <div class="single-prd-item">
+                <%= image_tag(image)%>
+              </div>
+            <%end%>
         </div>
       </div>
       <div class="col-lg-5 offset-lg-1">
@@ -48,7 +44,11 @@
                 <label for="qty">Quantity:</label>
                 <%= f.hidden_field :item_id, :value => @item.id %>
                 <%= f.number_field :quantity, :value => 1, :min => 1, class: "input-text qty" %>
-                <%= f.button "Add to bag", class: "primary-btn" %>
+                <% if current_user.present? %>
+                  <div class="primary-btn" style="position: relative; top: 14px;" title="you can not add your own product to cart">Its Your Product</div>
+                <% else %>
+                  <%= f.button "Add to bag", class: "primary-btn" %>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -242,7 +242,7 @@
               <div class="review_item">
                 <div class="media">
                   <div class="d-flex">
-                    <img src="img/product/review-1.png" alt="">
+                    <%# <img src="img/product/review-1.png" alt=""> %>
                   </div>
                   <div class="media-body">
                     <h4>Blake Ruiz</h4>

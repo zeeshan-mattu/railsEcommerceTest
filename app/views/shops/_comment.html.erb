@@ -8,9 +8,13 @@
       <div class="media-body">
         <h4><%= comment.name %></h4>
         <h5>12th Feb, 2018 at 05:56 pm</h5>
-        <a class="reply_btn" href="#">Reply</a>
+        <% if current_user.id === comment.user_id %>
+        <%= link_to "Edit", edit_comment_path(comment),  class: "reply_btn", style: "margin-right: 120px" %>
+        <%= link_to "Delete", comment_path(comment), method: :delete, remote: true, class: "me-n5 reply_btn" %>
+        <% end %>
       </div>
     </div>
     <p><%= comment.description %></p>
   </div>
 <% end %>
+

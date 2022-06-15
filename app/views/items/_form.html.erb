@@ -1,3 +1,5 @@
+
+<div style="margin-top: 300px">
 <%= form_with(model: item, local: true) do |form| %>
   <% if item.errors.any? %>
     <div id="error_explanation">
@@ -11,6 +13,12 @@
     </div>
   <% end %>
   <%= form.hidden_field :user_id, :value => current_user.id%>
+
+  <div class="field">
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title %>
@@ -25,3 +33,4 @@
     <%= form.submit %>
   </div>
 <% end %>
+</div>

@@ -70,3 +70,5 @@ gem 'jquery-rails'
 
 gem "pundit"
 gem 'stripe'
+
+gem 'ransack'

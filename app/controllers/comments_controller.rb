@@ -1,15 +1,18 @@
 class CommentsController < ApplicationController
 
-  before_action :require_login, only: :create
+  before_action :require_login, only: %i[create]
+  before_action :find_item, only: %i[create]
 
   def create
-    @item = Item.find(params[:item_id])
     @comment = @item.comments.new(comment_params)
     @comment.user = current_user
     if @comment.save
       flash[:notice] = "Comment added successfully..."
     else
-      render('new')
+      flash[:alert] = @comment.error.full_messages
+    end
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -17,17 +20,19 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment = Comment.find(params[:id])
+    @comment =  Comment.find(params[:id])
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
+    @comment =  Comment.find(params[:id])
     if @comment.delete
       flash[:notice] = "Comment deleted!"
-      redirect_to_root_path
     else
       flash[:error] = "Can't delete this comment"
-      render :destroy
+    end
+    @item = @comment.item
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -38,7 +43,9 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:name, :description);
   end
 
-
+  def find_item
+    @item = Item.find(params[:item_id])
+  end
   def require_login
     unless current_user
       redirect_to new_user_session_path

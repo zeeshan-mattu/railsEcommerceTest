@@ -12,4 +12,7 @@ class ItemPolicy < ApplicationPolicy
   def new?
     @user.present?
   end
+  def edit?
+    @user.present?
+  end
 end
