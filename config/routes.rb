@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
 
-  get 'errors/not_found'
-  get 'errors/internal_server_error'
   devise_for :users
   root to: "shops#index"
   resources :items, shallow: true do
@@ -15,5 +15,5 @@ Rails.application.routes.draw do
   delete "clearCart", to: "order_items#clearCart"
   post "checkouts/create", to: "checkouts#create"
   get "/search", to: "shops#search"
-  
+
 end
